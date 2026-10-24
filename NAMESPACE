@@ -1,0 +1,7 @@
+export(i1_test)
+export(i1_stt)
+export(dcii1)
+export(change_points)
+export(covering_metric)
+export(covering_metric_unwtd)
+importFrom(utils,head,tail)

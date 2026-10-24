@@ -1,0 +1,21 @@
+DCIi1: I1 Mean-Change Testing and DCI Candidate Detection
+Copyright: Nachiketas Waychal, Arnab Kumar Laha and Ankur Sinha.
+
+This package's source code and included calibration data are distributed under
+the GNU General Public License, version 3 (GPL-3). The licence text is available
+at https://www.gnu.org/licenses/gpl-3.0.html and in R's share/licenses/GPL-3.
+This software is provided without warranty, as specified by that licence.
+
+Authors and affiliations (from the research article):
+Nachiketas Waychal: Operations, Supply Chain Management and Quantitative Methods,
+S. P. Jain Institute of Management and Research, Mumbai 400058, India.
+Arnab Kumar Laha: Operations and Decision Sciences,
+Indian Institute of Management Ahmedabad, Ahmedabad 380015, India.
+Ankur Sinha: Operations and Decision Sciences,
+Indian Institute of Management Ahmedabad, Ahmedabad 380015, India.
+
+Maintainer: Nachiketas Waychal <nachiketas.waychal@yahoo.com>.
+Method citation: Waychal, Laha and Sinha (2026), doi:10.48550/arXiv.2610.23476.
+
+Acknowledgement: AI-assisted tools supported refactoring, documentation and
+test development. AI systems are not authors or copyright holders.

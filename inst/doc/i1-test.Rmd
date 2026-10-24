@@ -1,0 +1,72 @@
+---
+title: "I1 mean-change testing"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{I1 mean-change testing}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(DCIi1)
+```
+
+## Reference test
+
+The null is a constant mean with independent Gaussian noise. This release
+uses the supplied empirical calibration only for 100 observations and w1=22.
+The finite-sample probabilities are approximate; they are not Gumbel p-values.
+
+```{r}
+set.seed(12)
+y <- rnorm(100) + rep(c(0, 3), each=50)
+fit <- i1_test(y)
+fit
+diagnostics <- attr(fit, "diagnostics")
+diagnostics
+fit$cpmag * diagnostics$sigma
+```
+
+etahat is the last observation before a candidate boundary, whether or not
+the test rejects. The signed cpmag is in standardized units. Multiplication
+by sigma expresses that local contrast in data units.
+
+## Formula and scope
+
+Adaptive future-minus-past contrasts are summed symmetrically. The maximum
+absolute aggregate is taken over w,...,n-w, following the research script.
+The standard deviation estimate is IQR(diff(y))/[-2 sqrt(2) Phi_inverse(.25)].
+WD mode divides that scale by (1-rho), exactly as in Appendix B.1, and estimates
+rho using 1+2 cor(diff(y)[-last],diff(y)[-first]). The radical covers 2 only.
+
+```{r}
+i1_test(y, archeck=1, calibration="none")
+i1_test(y, w1=16, calibration="none")
+set.seed(13)
+long_series <- rnorm(300)
+i1_stt(long_series)
+i1_test(long_series, calibration="none")
+```
+
+Statistic-only results have pvalue=NA. Reference mode rejects other lengths,
+windows and WD mode. Input checks do not establish Gaussian independence.
+Zero IQR and inadmissible dependence estimates error explicitly.
+
+## Finite-sample evidence
+
+In 10000 independent Gaussian null series (seed 26102403), rejection rates
+were .0086, .0415 and .0857 at nominal .01, .05 and .10. The same fixed density
+was used throughout. These conservative rates do not prove exact size or
+validity under other distributions. A reported zero is a finite-grid tail
+approximation. Rounded p-values limit significance resolution.
+
+There is no adjustment for repeated testing. The package targets mean shifts;
+a linear trend is not the constant-mean null. For multiple descriptive
+candidates, see the DCI vignette.
+
+## Reference
+
+Waychal, N., Laha, A. K. and Sinha, A. (2026).
+Closely spaced change-point detection with an application to geopolitical
+shocks in oil and gas markets. <https://doi.org/10.48550/arXiv.2610.23476>.

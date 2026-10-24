@@ -1,0 +1,37 @@
+Package: DCIi1
+Type: Package
+Title: I1 Mean-Change Testing and DCI Candidate Detection
+Version: 0.2.0
+Authors@R: c(
+    person("Nachiketas", "Waychal", email = "nachiketas.waychal@yahoo.com",
+        role = c("aut", "cre", "cph"),
+        comment = "S. P. Jain Institute of Management and Research, Mumbai, India"),
+    person("Arnab Kumar", "Laha", role = c("aut", "cph"),
+        comment = "Indian Institute of Management Ahmedabad, Ahmedabad, India"),
+    person("Ankur", "Sinha", role = c("aut", "cph"),
+        comment = "Indian Institute of Management Ahmedabad, Ahmedabad, India"))
+Description: Computes the I1 statistic for mean changes and generates
+    multiple candidate change locations using adaptive contrasts and local
+    interquartile scaling. Provides empirical I1 p-values for independent
+    Gaussian series of length 100 with full-window parameter 22, statistic-only
+    analysis for other settings, and weighted and unweighted segmentation
+    covering scores. DCI candidate detection is descriptive and does not
+    assign significance to selected segments. Based on the methodology of
+    Waychal, Laha and Sinha (2026) <doi:10.48550/arXiv.2610.23476>.
+License: GPL-3
+Copyright: Nachiketas Waychal, Arnab Kumar Laha and Ankur Sinha
+Encoding: UTF-8
+Depends: R (>= 4.1.0)
+Imports: stats, utils
+Suggests: testthat (>= 3.0.0), knitr, rmarkdown
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+NeedsCompilation: no
+Packaged: 2026-10-24 04:42:49 UTC; nachi
+Author: Nachiketas Waychal [aut, cre, cph] (S. P. Jain Institute of Management
+    and Research, Mumbai, India),
+  Arnab Kumar Laha [aut, cph] (Indian Institute of Management Ahmedabad,
+    Ahmedabad, India),
+  Ankur Sinha [aut, cph] (Indian Institute of Management Ahmedabad,
+    Ahmedabad, India)
+Maintainer: Nachiketas Waychal <nachiketas.waychal@yahoo.com>

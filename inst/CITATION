@@ -1,0 +1,7 @@
+bibentry(bibtype = "Article",
+  title = paste("Closely spaced change-point detection with an application to",
+                "geopolitical shocks in oil and gas markets"),
+  author = c(person("Nachiketas", "Waychal"), person("Arnab Kumar", "Laha"),
+             person("Ankur", "Sinha")),
+  year = "2026", journal = "arXiv preprint arXiv:2610.23476",
+  doi = "10.48550/arXiv.2610.23476")

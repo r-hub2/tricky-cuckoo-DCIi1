@@ -1,0 +1,75 @@
+---
+title: "Descriptive DCI candidate detection"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Descriptive DCI candidate detection}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(DCIi1)
+```
+
+## Generate candidates
+
+DCI uses adaptive contrasts and local IQR exceedances to flag possible changes.
+It then calculates an I1 statistic and refined location between neighboring
+flags. This release provides descriptive candidates, not significance-tested
+changes. Every pvalue is NA, including for windows of length 100: a window
+selected by DCI is not a prespecified standalone test.
+
+```{r}
+set.seed(21)
+y <- rnorm(160) + rep(c(0,4,-3,1), c(50,15,15,80))
+candidates <- dcii1(y)
+candidates
+locations <- change_points(candidates)
+locations
+plot(y, type="l", xlab="Observation", ylab="Value")
+abline(v=locations, col="firebrick", lty=2)
+```
+
+Flag is the preliminary location; etavec is refined within its neighboring
+window. Locations are the last observation before a boundary. Direction is
+the original flag sign and can differ from the sign of Magnitude. Each window
+has its own scale, so Magnitude is not an original-unit shift estimate.
+
+## Local scaling and flag conventions
+
+```{r}
+dcii1(y, nbrhudfracleni1=.5)
+dcii1(y, flag_method="runs")
+```
+
+The localization fraction controls how many contrasts each IQR window contains.
+Zero local IQR is an intentional error. The default legacy flag rule preserves
+the original centroid and run-selection conventions, with negative-terminal
+indexing repaired. The runs option includes all maximal nonzero same-sign runs.
+It can produce different candidates. r1 thresholds absolute flag weights,
+while il_cutoff thresholds individual local exceedances; neither is a
+significance level.
+
+## Evaluate descriptive segmentation
+
+```{r}
+truth <- c(50,65,80)
+covering_metric(length(y), truth, locations)
+covering_metric_unwtd(length(y), truth, locations)
+```
+
+Covering uses the best Jaccard overlap for each true segment. The weighted
+metric weights by true-segment length; the unweighted metric gives each true
+segment equal weight. Values lie in [0,1], with 1 for identical partitions.
+Neither metric is a test or p-value. Candidates can occur in noise-only data.
+
+The earlier development interface's accepted-output and sequential testing
+options are not part of this release. change_points() only sorts and
+deduplicates the candidate locations, without accepting or rejecting hypotheses.
+
+## Reference
+
+Waychal, N., Laha, A. K. and Sinha, A. (2026).
+Closely spaced change-point detection with an application to geopolitical
+shocks in oil and gas markets. <https://doi.org/10.48550/arXiv.2610.23476>.
